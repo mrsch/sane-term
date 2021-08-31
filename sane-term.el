@@ -49,19 +49,19 @@ Depends on sane-term-kill-on-exit."
   (catch 'loop
     (dolist (buf (buffer-list))
       (with-current-buffer buf
-        (when (derived-mode-p 'term-mode)
+        (when (derived-mode-p 'vterm-mode)
           (throw 'loop t))))))
 
 (defun sane-term-cycle (reverse)
   (unless reverse
-    (when (derived-mode-p 'term-mode)
+    (when (derived-mode-p 'vterm-mode)
       (bury-buffer)))
   (let ((buffers (buffer-list)))
     (when reverse
       (setq buffers (nreverse buffers)))
     (catch 'loop
       (dolist (buf buffers)
-        (when (with-current-buffer buf (derived-mode-p 'term-mode))
+        (when (with-current-buffer buf (derived-mode-p 'vterm-mode))
           (switch-to-buffer buf)
           (throw 'loop nil))))))
 
@@ -79,7 +79,7 @@ Depends on sane-term-kill-on-exit."
 (defun sane-term-create ()
   "Create new term buffer."
   (interactive)
-  (ansi-term sane-term-shell-command))
+  (vterm sane-term-shell-command))
 
 ;;;###autoload
 (defun sane-term ()
